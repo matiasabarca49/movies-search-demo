@@ -3,21 +3,20 @@ import { getMoviesFromDB } from "../services/movie"
 
 const useMovies = (search )=>{
     const [movies, setMovies] = useState()
-    const [sort, setSort] = useState()
+    const [page, setPage] = useState(1)
+    const [notSearch, setNotSearch] = useState(false)
     const prevSearch = useRef(search)
 
-    const getMovies = useCallback( async (newSearch)=>{
-        console.log(newSearch)
-        if(prevSearch.current !== newSearch){
-            const moviesFromDB = await getMoviesFromDB(newSearch)
-            console.log(moviesFromDB)
-            setMovies(moviesFromDB)
-            prevSearch.current = newSearch
-        }
+    const getMovies = useCallback( async (newSearch, nextPage)=>{
+        const moviesFromDB = await getMoviesFromDB(newSearch, nextPage)
+       /*  console.log("Peliculas en getMovies: ",moviesFromDB) */
+        setMovies(moviesFromDB)
+        prevSearch.current = newSearch
+        moviesFromDB.length === 0  ? setNotSearch(true) : setNotSearch(false)
     }, [])
 
-    const sortMovies = ( (newSort, movies) => {
-        console.log("newSort: ",newSort)
+    const sortMovies = ( (newSort) => {
+        /* console.log("newSort: ",newSort) */
         if(search !== " " && newSort === 'name'){
           const movieSorted = [...movies].sort( (a,b) => a.title.localeCompare(b.title))
           setMovies(movieSorted)
@@ -31,24 +30,29 @@ const useMovies = (search )=>{
         }
         else{
             prevSearch.current = 'reSearch'
-            getMovies(search)
+            getMovies(search, 1)
         }
       })
 
-      const filterMovies = async (filter ,movies)=>{
+      const filterMovies = async (filter)=>{
         if (filter === "all"){ 
             prevSearch.current = 'reSearch'
-            getMovies(search)
+            getMovies(search, 1)
         }
         else{
           const moviesFromDB = await getMoviesFromDB(search)
           const filterMovies = moviesFromDB.filter( movie =>  movie.type === filter )
-          console.log("Filtrado: ",filterMovies)
+          /* console.log("Filtrado: ",filterMovies) */
           setMovies(filterMovies)
         }
       }
 
-    return ( {movies, getMovies, sortMovies, filterMovies} )
+      const nextPage = ()=>{
+        getMovies(search, page + 1)
+        setPage(page + 1)
+      }
+
+    return ( {movies, getMovies, sortMovies, filterMovies, notSearch, nextPage} )
 }
 
 export default useMovies

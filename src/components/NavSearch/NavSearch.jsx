@@ -5,18 +5,19 @@ import Movies from '../Movies/Movies'
 import debounce from "just-debounce-it";
 import useSearch from '../../hooks/useSearch';
 import useMovies from '../../hooks/useMovies';
+import ToggleSwitch from '../globals/toggleSwitch/ToggleSwitch';
 
 const NavSearch = () => {
 
     const {search, setSearch, error, isFirstSearch} = useSearch()
-    const {movies, getMovies, sortMovies, filterMovies} = useMovies(search)
+    const {movies,getMovies, sortMovies, filterMovies, notSearch, nextPage} = useMovies(search)
     const [auto, setAuto] = useState(true)
   
     const debounceMovies = useCallback(debounce( search => {
-        console.log({search: search})
-        getMovies(search)
+        /* console.log("debounce: ",{search: search}) */
+        getMovies(search, 1)
         isFirstSearch.current= true
-    }, 500),[])
+    }, 300),[])
 
     const handleSearch = (e)=>{
         setSearch(e.target.value)
@@ -24,31 +25,36 @@ const NavSearch = () => {
     }
 
     const handleSort = (newSort)=>{
-        sortMovies(newSort, movies)
+        sortMovies(newSort)
     }
 
     const handleFilter = (newFilter) =>{
-        filterMovies(newFilter, movies)
+        filterMovies(newFilter)
         
     }
 
     const handleSubmit = (e)=>{
         e.preventDefault()
-        getMovies(search)
+        getMovies(search, 1)
     }
 
     const handleAuto = (e)=>{
-        console.log(e.target.checked)
+        /* console.log(e.target.checked) */
         e.target.checked? setAuto(false) : setAuto(true)
         isFirstSearch.current= true
+    }
+
+    const handlePage = ()=>{
+      console.log("cambiar Página")
+      nextPage()
     }
 
   return (
     <div>
         <main className='page'>
-      <h1>Buscador de peliculas</h1>
+      <h1>Buscador de Películas</h1>
       <form className='page__search' action="" onSubmit={ handleSubmit }>
-        <input type="text" placeholder='Avengers, Matrix...' onChange={(e)=> handleSearch(e) } value={search} required />
+        <input type="text" placeholder='Avengers, Matrix...' onChange={(e)=> handleSearch(e) } value={search} required style={{textAlign: "center", border: "none", borderRadius: "5px", backgroundColor: "#ebeff3"}}/>
         <div>
           <label htmlFor="year">Año</label>
           <input type='radio' name='radioSort' id='sortYear' onChange={()=> handleSort('year')}/>
@@ -66,22 +72,28 @@ const NavSearch = () => {
           <input type='radio' name='radioSort' id='sortDefault' onChange={()=> handleSort('')}/>
         </div>
         <div>
-          <label htmlFor="filter">Tipo:</label>
           <select name="" id="" onChange={(e)=> handleFilter(e.target.value)}>
               <option value="all">Todos</option>
               <option value="game">Juego</option>
               <option value="series">Serie</option>
               <option value="movie">Pelicula</option>
           </select>
+          <label htmlFor="filter">Tipo:</label>
         </div>
-        <input type="submit" value="Buscar" />
-        <div>
-          <label htmlFor="">No automático</label>
-        <input type="checkbox" onChange={(e) => handleAuto(e) } />
-        </div>
+        <button style={{marginLeft: "2rem",border: "none", background: "transparent"}}><img src="./img/buscar.png" alt="search" style={{width: "30px"}} /></button>
+        <ToggleSwitch label="No Automatico" event={e => handleAuto(e)} />
       </form>
       <p style={{color: "red"}}>{error}</p>
-      { movies && <Movies  movies = { movies } />} 
+      {notSearch && <p> No se encontró la busqueda </p>}
+      { movies 
+        ? <Movies  movies = { movies } />
+        : <h3 style={{color:"#796779"}}>Busqueda una pelicula....</h3>}
+      {movies &&
+        <div>
+          <button onClick={ ()=> handlePage() }>Next Page</button>
+        </div> 
+      }
+      
     </main>
     </div>
   )

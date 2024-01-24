@@ -8,8 +8,8 @@ const Movies = ({ movies }) =>{
         <section className="showMoviesCont">
             {movies.map( (movie) =>(
                 <div key={movie.imdbID} className="showMovies">
-                    <h4 style={{height: "50px",margin: "10px 0", textAlign: "center", fontSize:"1.2rem"}}>{movie.title}</h4>
-                    <div style={{display: "flex", flexDirection:"column", boxShadow: "black 0px 0px 15px 2px", borderBottomLeftRadius: "20px", borderBottomRightRadius: "20px"}}>
+                    <h4 style={{height: "50px",margin: "10px 0", textAlign: "center", fontSize:"1.2rem", color: "#333333"}}>{movie.title}</h4>
+                    <div style={{display: "flex", flexDirection:"column", boxShadow: "0px 35px 80px rgba(173, 185, 201, 0.5)", borderRadius: "10px", overflow: "hidden"}}>
                         <div className="showMovies__poster">
                             <img src={movie.poster} alt={`view poster of ${movie.title}`} />
                             <div className="showMovies__typeAndYear">
@@ -25,10 +25,6 @@ const Movies = ({ movies }) =>{
                             </div>
                         </div>
                     </div>
-                    {/* <h4>{movie.genre}</h4>
-                    <h4>{movie.country}</h4>
-                    <h4>{movie.director}</h4> */}
-
                 </div>
             ) )}
         </section>
