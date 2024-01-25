@@ -99,7 +99,7 @@ const NavSearch = () => {
         }
         { movies 
           ? <Movies  movies = { movies } />
-          : <h3 style={{color:"#796779"}}>Busqueda una pelicula....</h3>}
+          : <h3 style={{color:"#796779"}}>Busque una película....</h3>}
     </main>
     </div>
   )
