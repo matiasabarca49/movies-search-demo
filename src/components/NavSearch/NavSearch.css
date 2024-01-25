@@ -14,6 +14,7 @@
 
 .page .page__search{
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     margin: 2rem 0;
     padding: 1rem 2rem;
@@ -27,4 +28,21 @@
     flex-direction: row-reverse;
     align-items: center;
     gap: 0.5rem;
+}
+
+.page .setPagesStyle{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .page .page__search{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 70%;
+    }
 }

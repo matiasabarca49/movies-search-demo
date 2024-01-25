@@ -22,6 +22,10 @@
     overflow: hidden; */
     background-color: #e4dbdb;
     height: 370px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .showMoviesCont .showMovies div .showMovies__poster .showMovies__typeAndYear{
@@ -61,4 +65,17 @@
 
 .showMoviesCont .showMovies div .showMovies__rating div img{
     width: 40px;
+}
+
+@media screen and (max-width: 992px){
+    .showMoviesCont{
+        grid-template-columns: repeat(2, 250px);
+    }
+}
+
+@media screen and (max-width: 567px){
+    .showMoviesCont{
+        grid-template-columns: repeat(1, 250px);
+        gap: 4rem 1rem;
+    }
 }

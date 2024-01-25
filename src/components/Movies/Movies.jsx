@@ -11,7 +11,7 @@ const Movies = ({ movies }) =>{
                     <h4 style={{height: "50px",margin: "10px 0", textAlign: "center", fontSize:"1.2rem", color: "#333333"}}>{movie.title}</h4>
                     <div style={{display: "flex", flexDirection:"column", boxShadow: "0px 35px 80px rgba(173, 185, 201, 0.5)", borderRadius: "10px", overflow: "hidden"}}>
                         <div className="showMovies__poster">
-                            <img src={movie.poster} alt={`view poster of ${movie.title}`} />
+                            <img src={movie.poster} alt={"Not Image"} />
                             <div className="showMovies__typeAndYear">
                                 <h4>{movie.year}</h4>
                                 <h4>{`${movie.type[0].toUpperCase()}${movie.type.slice(1, movie.type.length)}`}</h4>

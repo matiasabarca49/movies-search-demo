@@ -51,8 +51,14 @@ const useMovies = (search )=>{
         getMovies(search, page + 1)
         setPage(page + 1)
       }
+      const prevPage = ()=>{
+        if(page > 1){
+          getMovies(search, page - 1)
+          setPage(page - 1)
+        }
+      }
 
-    return ( {movies, getMovies, sortMovies, filterMovies, notSearch, nextPage} )
+    return ( {movies, page, getMovies, sortMovies, filterMovies, notSearch, prevPage,nextPage} )
 }
 
 export default useMovies

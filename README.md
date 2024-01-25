@@ -32,7 +32,7 @@ NOTA: Es posible que se requiera permisos de administrador para ejecutar los com
 Se puede descargar desde el propio Github en el apartado -> code-> Donwload ZIP o mediante el comando de clonación en una terminal:
 
 ```
-git clone https://github.com/matiasabarca49/project-react-store-sk.git
+git clone https://github.com/matiasabarca49/movies-search-demo.git
 ```
 
 ## Instalación
